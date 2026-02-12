@@ -1,30 +1,38 @@
+// 1. 强行引入核心插件
 apply plugin: 'com.android.application'
-// 注意：不要写 apply plugin: 'kotlin-android'，新版环境已内置
+apply plugin: 'kotlin-android' 
 
 ext {
     extName = 'Gomuraw'
     extClass = '.Gomuraw'
-    extVersionCode = 11 // 提升版本号
+    extVersionCode = 20
 }
 
-// 1. 先引入官方基础配置
+// 2. 引入官方脚本（虽然它可能报错，但我们需要它的依赖库）
 apply from: "$rootDir/common.gradle"
 
-// 2. 后覆盖 Android 配置，确保源码被抓取
+// 3. [暴力破解] 强行覆盖所有路径配置
 android {
     compileSdk 34
     namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
 
     sourceSets {
         main {
-            // 强制指定源码目录为当前目录下的 src
-            java.srcDirs = ['src']
-            kotlin.srcDirs = ['src']
+            // 放弃相对路径，直接强行指向当前目录下的 src
+            java.srcDirs = [file("src")]
+            kotlin.srcDirs = [file("src")]
+            manifest.srcFile file("AndroidManifest.xml")
         }
     }
 
-    defaultConfig {
-        minSdk 21
-        targetSdk 34
+    // 强制开启 Kotlin 编译支持
+    kotlinOptions {
+        jvmTarget = "17"
     }
+}
+
+// 4. 强行注入核心依赖，确保编译器有活干
+dependencies {
+    implementation(project(":core"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
 }
