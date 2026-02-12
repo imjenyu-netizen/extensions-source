@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="eu.kanade.tachiyomi.extension.ja.gomuraw">
-
-    <!-- 必须包含 application 节点，即使是空的 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 这里绝对不能有 package 属性 -->
     <application />
-
 </manifest>
