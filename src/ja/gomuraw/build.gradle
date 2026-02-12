@@ -1,23 +1,30 @@
 apply plugin: 'com.android.application'
-// 严禁在此处写 apply plugin: 'kotlin-android'
 
 ext {
     extName = 'Gomuraw'
     extClass = '.Gomuraw'
-    extVersionCode = 30
+    extVersionCode = 40
 }
 
-// 1. 先加载官方脚本
 apply from: "$rootDir/common.gradle"
 
-// 2. 强制覆盖配置，解决 33KB 和 compileSdk 缺失问题
 android {
     compileSdk 34
     namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
 
+    // [关键修复] 强制 Java 编译器使用 JDK 17
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // [关键修复] 强制 Kotlin 编译器使用 JDK 17
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
     sourceSets {
         main {
-            // 暴力指定：不管官方怎么设，强制把当前目录下的 src 文件夹作为源码
             java.srcDirs = [file("src")]
             kotlin.srcDirs = [file("src")]
         }
@@ -26,13 +33,5 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 34
-    }
-}
-
-// 3. 强制补全 Kotlin 编译任务，防止被跳过
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    kotlinOptions {
-        jvmTarget = "17"
-        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 }
