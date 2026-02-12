@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 
 ext {
     extName = 'Gomuraw'
-    // 使用全路径类名，防止 Mihon 找不到入口
-    extClass = 'eu.kanade.tachiyomi.extension.ja.gomuraw.Gomuraw'
-    extVersionCode = 2 // 提升版本号以触发更新
+    // 必须以点号开头，表示相对于包名的类
+    extClass = '.Gomuraw' 
+    extVersionCode = 3
 }
 
 apply from: "$rootDir/common.gradle"
@@ -12,6 +12,7 @@ apply from: "$rootDir/common.gradle"
 android {
     compileSdk 34
     namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
+    
     defaultConfig {
         minSdk 21
         targetSdk 34
