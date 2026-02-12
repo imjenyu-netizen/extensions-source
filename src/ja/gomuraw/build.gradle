@@ -1,37 +1,41 @@
 apply plugin: 'com.android.application'
 
 ext {
-    extName = 'Gomuraw'
-    extClass = '.Gomuraw'
-    extVersionCode = 40
+extName = 'Gomuraw'
+extClass = '.Gomuraw'
+extVersionCode = 120
 }
 
 apply from: "$rootDir/common.gradle"
 
 android {
-    compileSdk 34
-    namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
+// 必须在这里定义 namespace，替代 Manifest 里的 package
+namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
+compileSdk 34
 
-    // [关键修复] 强制 Java 编译器使用 JDK 17
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+*.txt
+Plaintext
+compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+}
+sourceSets {
+    main {
+        // 强制编译器去 src 文件夹找代码，解决 33KB 问题
+        java.srcDirs = ['src']
     }
+}
+defaultConfig {
+    minSdk 21
+    targetSdk 34
+}
+}
 
-    // [关键修复] 强制 Kotlin 编译器使用 JDK 17
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
-    sourceSets {
-        main {
-            java.srcDirs = [file("src")]
-            kotlin.srcDirs = [file("src")]
-        }
-    }
-
-    defaultConfig {
-        minSdk 21
-        targetSdk 34
-    }
+// 强制对齐 Kotlin 编译器版本，解决 JVM 冲突
+afterEvaluate {
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+kotlinOptions {
+jvmTarget = "17"
+}
+}
 }
