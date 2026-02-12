@@ -1,20 +1,17 @@
 apply plugin: 'com.android.application'
-// 已移除 kotlin-android 插件，新版 AGP 已内置支持
 
 ext {
     extName = 'Gomuraw'
     extClass = '.Gomuraw'
     extVersionCode = 1
-    libVersion = '1.4'
+    // 删除了 libVersion, pkgNameSuffix 等所有会导致 assert 失败的变量
 }
 
 apply from: "$rootDir/common.gradle"
 
-// 显式指定 Android 编译参数，修复错误 2
+// 强制在最后补全 SDK 信息，确保 AGP 不报错
 android {
     compileSdk 34
-    
-    // 新版 AGP 强制要求指定 namespace
     namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
     
     defaultConfig {
