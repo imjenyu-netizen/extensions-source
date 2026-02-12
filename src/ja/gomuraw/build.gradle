@@ -1,10 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 ext {
     extName = 'Gomuraw'
-    // 必须以点号开头，表示相对于包名的类
+    // 必须与 Gomuraw.kt 中的 package 路径完全对应
     extClass = '.Gomuraw' 
-    extVersionCode = 3
+    extVersionCode = 4
+    libVersion = '1.4'
 }
 
 apply from: "$rootDir/common.gradle"
@@ -12,6 +14,13 @@ apply from: "$rootDir/common.gradle"
 android {
     compileSdk 34
     namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
+    
+    sourceSets {
+        main {
+            // 显式指定源码目录，确保 GitHub Actions 能找到代码
+            java.srcDirs = ['src']
+        }
+    }
     
     defaultConfig {
         minSdk 21
