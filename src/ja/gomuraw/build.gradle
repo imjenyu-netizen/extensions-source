@@ -2,18 +2,16 @@ apply plugin: 'com.android.application'
 
 ext {
     extName = 'Gomuraw'
-    extClass = '.Gomuraw'
-    extVersionCode = 1
-    // 删除了 libVersion, pkgNameSuffix 等所有会导致 assert 失败的变量
+    // 使用全路径类名，防止 Mihon 找不到入口
+    extClass = 'eu.kanade.tachiyomi.extension.ja.gomuraw.Gomuraw'
+    extVersionCode = 2 // 提升版本号以触发更新
 }
 
 apply from: "$rootDir/common.gradle"
 
-// 强制在最后补全 SDK 信息，确保 AGP 不报错
 android {
     compileSdk 34
     namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
-    
     defaultConfig {
         minSdk 21
         targetSdk 34
