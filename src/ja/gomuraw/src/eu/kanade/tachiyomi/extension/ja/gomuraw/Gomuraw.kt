@@ -1,5 +1,6 @@
 package eu.kanade.tachiyomi.extension.ja.gomuraw
 
+import eu.kanade.tachiyomi.network.GET // <--- 必须加上这一行
 import eu.kanade.tachiyomi.source.online.ParsedHttpSource
 import eu.kanade.tachiyomi.source.model.SManga
 import eu.kanade.tachiyomi.source.model.SChapter
