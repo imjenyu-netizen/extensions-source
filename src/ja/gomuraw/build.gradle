@@ -17,11 +17,7 @@ android {
         targetSdk 34
     }
 
-    sourceSets {
-        main {
-            java.srcDirs = ['src']
-        }
-    }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
