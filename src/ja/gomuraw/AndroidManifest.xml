@@ -1,0 +1,9 @@
+ext {
+    extName = 'Gomuraw'
+    pkgNameSuffix = 'ja.gomuraw'
+    extClass = '.Gomuraw'
+    extVersionCode = 1
+    libVersion = '1.4'
+}
+
+apply from: "$rootDir/common.gradle"
