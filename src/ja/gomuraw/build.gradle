@@ -1,9 +1,12 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
 ext {
     extName = 'Gomuraw'
-    pkgNameSuffix = 'ja.gomuraw'
     extClass = '.Gomuraw'
     extVersionCode = 1
     libVersion = '1.4'
+    compileSdk = 34 // 显式指定 SDK 版本以修复错误 2
 }
 
 apply from: "$rootDir/common.gradle"
