@@ -1,17 +1,21 @@
 package eu.kanade.tachiyomi.extension.ja.gomuraw
 
-import eu.kanade.tachiyomi.network.GET
-import eu.kanade.tachiyomi.source.model.*
 import eu.kanade.tachiyomi.source.online.ParsedHttpSource
-import okhttp3.*
+import eu.kanade.tachiyomi.source.model.SManga
+import eu.kanade.tachiyomi.source.model.SChapter
+import eu.kanade.tachiyomi.source.model.Page
+import eu.kanade.tachiyomi.source.model.FilterList
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.OkHttpClient
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 
 class Gomuraw : ParsedHttpSource() {
-    override val name = "Gomuraw"
-    override val baseUrl = "https://gomuraw.com"
-    override val lang = "ja"
-    override val supportsLatest = true
+override val name = "Gomuraw"
+override val baseUrl = "https://gomuraw.com"
+override val lang = "ja"
+override val supportsLatest = true
 
     // [CRITICAL] 必须模拟真实浏览器 UA 才能通过 Cloudflare 基础校验
     override val client: OkHttpClient = network.cloudflareClient.newBuilder()
