@@ -1,0 +1,30 @@
+name: Build Gomuraw Only
+
+on:
+  workflow_dispatch: # 允许手动点击运行
+
+jobs:
+  build:
+    name: Build Gomuraw Extension
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build with Gradle
+        run: chmod +x gradlew && ./gradlew :src:ja:gomuraw:assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: gomuraw-apk
+          path: src/ja/gomuraw/build/outputs/apk/debug/*.apk
