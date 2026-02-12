@@ -9,7 +9,6 @@ ext {
 apply from: "$rootDir/common.gradle"
 
 android {
-    // 必须定义命名空间
     namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
     compileSdk 34
 
@@ -20,7 +19,6 @@ android {
 
     sourceSets {
         main {
-            // 指向你的代码所在目录
             java.srcDirs = ['src']
         }
     }
@@ -29,17 +27,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-
-    kotlinOptions {
-        jvmTarget = "17"
-    }
 }
 
-// 强制对齐 Kotlin 编译版本，解决环境冲突
-afterEvaluate {
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-        kotlinOptions {
-            jvmTarget = "17"
-        }
+// 在 AGP 9.0+ 中，统一在这里配置 Kotlin 编译选项
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "17"
+        // 如果后续编译报这种错误，可以尝试把这一行也加上：
+        // freeCompilerArgs += "-Xjvm-default=all"
     }
 }
