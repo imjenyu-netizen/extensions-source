@@ -1,29 +1,29 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+// 删除了 apply plugin: 'kotlin-android'，因为新版 AGP 9.0+ 已内置
 
 ext {
     extName = 'Gomuraw'
-    // 必须与 Gomuraw.kt 中的 package 路径完全对应
-    extClass = '.Gomuraw' 
-    extVersionCode = 4
+    extClass = '.Gomuraw'
+    extVersionCode = 5
     libVersion = '1.4'
 }
 
-apply from: "$rootDir/common.gradle"
-
+// 必须在 apply from 之前定义 android 块的部分参数，或者在之后显式补全
 android {
     compileSdk 34
     namespace "eu.kanade.tachiyomi.extension.ja.gomuraw"
-    
-    sourceSets {
-        main {
-            // 显式指定源码目录，确保 GitHub Actions 能找到代码
-            java.srcDirs = ['src']
-        }
-    }
     
     defaultConfig {
         minSdk 21
         targetSdk 34
     }
+    
+    sourceSets {
+        main {
+            // 关键：确保编译器能找到你的源码文件夹
+            java.srcDirs = ['src']
+        }
+    }
 }
+
+apply from: "$rootDir/common.gradle"
